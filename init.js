@@ -90,12 +90,12 @@ fs.writeFileSync(
 )
 console.log("package.json updated")
 
-child.execSync(`cp ${COMMITLINT_CONFIG} ${EXEC_PATH}`)
-child.execSync(`cp ${COMMITLINT_RULES_CONFIG} ${EXEC_PATH}`)
-child.execSync(`cp ${PRETTIER_CONFIG} ${EXEC_PATH}`)
-child.execSync(`cp ${PRETTIER_IGNORE} ${EXEC_PATH}`)
-child.execSync(`cp ${RELEASE_IT_CONFIG} ${EXEC_PATH}`)
-child.execSync(`cp ${EDITOR_CONFIG} ${EXEC_PATH}`)
+// child.execSync(`cp ${COMMITLINT_CONFIG} ${EXEC_PATH}`)
+// child.execSync(`cp ${COMMITLINT_RULES_CONFIG} ${EXEC_PATH}`)
+// child.execSync(`cp ${PRETTIER_CONFIG} ${EXEC_PATH}`)
+// child.execSync(`cp ${PRETTIER_IGNORE} ${EXEC_PATH}`)
+// child.execSync(`cp ${RELEASE_IT_CONFIG} ${EXEC_PATH}`)
+// child.execSync(`cp ${EDITOR_CONFIG} ${EXEC_PATH}`)
 console.log("Copied config files")
 
 // child.execSync("npm init @eslint/config")
