@@ -107,7 +107,7 @@ console.log("package.json updated")
 
 // const huskyCommitMsg = child
 // 	.execSync(
-// 		"npx husky add .husky/commit-msg 'npx --no -- commitlint --edit --verbose'"
+// 		"n"
 // 	)
 // 	.toString("utf-8")
 // 	.slice(0, -1)
