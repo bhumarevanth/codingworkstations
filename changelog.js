@@ -42,8 +42,9 @@ const commitsArray = output
 
 const initialCommitMessage = commitsArray[commitsArray.length - 1].message
 
-commitsArray[commitsArray.length - 1].message = `0.0.0 [${commitsArray[commitsArray.length - 1].message
-	}]`
+commitsArray[commitsArray.length - 1].message = `0.0.0 [${
+	commitsArray[commitsArray.length - 1].message
+}]`
 
 commitsArray.forEach((commit, idx) => {
 	if (
@@ -176,11 +177,13 @@ commitReleases.forEach((commits, idx) => {
 	if (idx === commitReleases.length - 1)
 		link = `${remoteUrl}/commit/${firstCommit}`
 	else if (idx === commitReleases.length - 2)
-		link = `${remoteUrl}/compare/v${first.message}...${commitReleases[idx + 1][0].sha
-			}`
+		link = `${remoteUrl}/compare/v${first.message}...${
+			commitReleases[idx + 1][0].sha
+		}`
 	else
-		link = `${remoteUrl}/compare/v${first.message}...${commitReleases[idx + 1][0].message
-			}`
+		link = `${remoteUrl}/compare/v${first.message}...${
+			commitReleases[idx + 1][0].message
+		}`
 
 	changeLog += `## [${first.message}](${link}) (${first.date})\n`
 	restCommits.forEach(commit => {
@@ -191,8 +194,8 @@ commitReleases.forEach((commits, idx) => {
 					key === "*"
 						? "*"
 						: Object.keys(types).includes(key)
-							? types[key]
-							: `:${key}:`
+						? types[key]
+						: `:${key}:`
 				console.log(header)
 				changeLog += `### ${header}\n`
 				commit[key].forEach(commit => {
@@ -206,4 +209,4 @@ commitReleases.forEach((commits, idx) => {
 	changeLog += "\n"
 })
 
-fs.writeFileSync(`${process.env.PWD ?? '.'}/${process.argv[3]}`, changeLog)
+fs.writeFileSync(`${process.env.PWD ?? "."}/${process.argv[3]}`, changeLog)
