@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 (2023-02-06)
+
+
+### * Chores
+
+* release v0.1.1 ([cb6d3b1](https://github.com/bhumarevanth/codingworkstations/commit/cb6d3b1200fbb3c2544315fc5648f550d38316fb))
+* release v0.1.2 ([5f5dd5e](https://github.com/bhumarevanth/codingworkstations/commit/5f5dd5efa54b5f88810f28bd06ec6933c7ee12d2))
+
+
+### ✨ Features
+
+* basic flow with single question setup ([4e9f4f8](https://github.com/bhumarevanth/codingworkstations/commit/4e9f4f80929e4bed79fe10cb55104b3f833873b1))
+
 ### 0.1.2 (2023-01-28)
 
 
