@@ -1,10 +1,10 @@
 import React from "react"
-import { Link } from "react-router-dom"
-import Signin from "../Components/Signin"
+import { Link, useNavigate } from "react-router-dom"
 import { auth } from "../Config/firebase"
-import { createUserWithEmailAndPassword } from "firebase/auth"
-
+import Signin from "../Components/Signin"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 function Signup() {
+	const navigate = useNavigate()
 	const [values, setValues] = React.useState({
 		name: "",
 		email: "",
@@ -21,9 +21,9 @@ function Signup() {
 			}
 		})
 	}
-	const handleSubmission = event => {
+	function handleSubmission(event) {
 		if (!values.name || !values.email || !values.pass || !values.cpass) {
-			setMsg("Fill All Fields")
+			setMsg("Fill all Fields")
 			return
 		}
 		if (values.pass !== values.cpass) {
@@ -32,13 +32,17 @@ function Signup() {
 		}
 		setMsg("")
 		createUserWithEmailAndPassword(auth, values.email, values.pass)
-			.then(res => {
-				console.log(res)
+			.then(async res => {
+				const user = res.user
+				await updateProfile(user, {
+					displayName: values.name,
+				})
+				console.log(user)
 			})
 			.catch(err => {
 				setMsg(err.message)
-				console.log(err.message)
 			})
+		navigate("/Signin")
 	}
 	return (
 		<div className="bg-gray-800 h-screen flex justify-center items-center">
@@ -47,46 +51,46 @@ function Signup() {
 					SIGNUP
 				</h2>
 				<div className="flex flex-col text-gray-400 py-2">
-					<label className="text-white">Name</label>
+					<label>Name</label>
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
 						type="text"
-						placeholder="User Name"
-						onChange={solve}
+						placeholder="Enter UserName"
 						name="name"
+						onChange={solve}
 						required
 					/>
 				</div>
 				<div className="flex flex-col text-gray-400 py-2">
-					<label className="text-white">Email</label>
+					<label>Email</label>
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
 						type="email"
 						placeholder="Email"
-						onChange={solve}
 						name="email"
+						onChange={solve}
 						required
 					/>
 				</div>
 				<div className="flex flex-col text-gray-400 py-2">
-					<label className="text-white">Password</label>
+					<label>Password</label>
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
 						type="password"
 						placeholder="Password"
-						onChange={solve}
 						name="pass"
+						onChange={solve}
 						required
 					/>
 				</div>
 				<div className="flex flex-col text-gray-400 py-2">
-					<label className="text-white">Confirm Password</label>
+					<label>Password</label>
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
 						type="password"
-						placeholder="COnfirm Password"
-						onChange={solve}
+						placeholder="Confirm Password"
 						name="cpass"
+						onChange={solve}
 						required
 					/>
 				</div>
@@ -103,10 +107,10 @@ function Signup() {
 						<span>
 							<Link
 								className="underline underline-offset-1"
-								to="/"
+								to="/Signin"
 								element={<Signin />}
 							>
-								Sign in
+								Signin
 							</Link>
 						</span>
 					</p>

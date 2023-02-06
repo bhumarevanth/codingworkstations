@@ -4,15 +4,17 @@ import Signin from "./Components/Signin"
 import Signup from "./Components/Signup"
 import Home from "./Components/Home"
 import { auth } from "./Config/firebase"
+import Question from "./Components/Question"
+import Problems from "./Components/Problems"
 // import fire from './Config/firebase'
 function App() {
-	const [username, setUsername] = React.useState("")
+	const [userName, setUserName] = React.useState("")
 	React.useEffect(() => {
 		auth.onAuthStateChanged(user => {
 			if (user) {
-				setUsername(user.displayName)
+				setUserName(user.displayName)
 			} else {
-				setUsername("")
+				setUserName("")
 			}
 		})
 	}, [])
@@ -22,7 +24,7 @@ function App() {
 				<Routes>
 					<Route
 						path="/"
-						element={<Home name={username} />}
+						element={<Home name={userName} />}
 					/>
 					<Route
 						path="/Signin"
@@ -31,6 +33,14 @@ function App() {
 					<Route
 						path="/Signup"
 						element={<Signup />}
+					/>
+					<Route
+						path="/Add"
+						element={<Question />}
+					/>
+					<Route
+						path="/Problems/:Id"
+						element={<Problems />}
 					/>
 				</Routes>
 			</BrowserRouter>

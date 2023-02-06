@@ -5,8 +5,6 @@ const commitReleases = []
 const releaseIdxs = []
 let changeLog = ``
 
-// console.log(process.env.PWD ?? '.')
-
 let remoteUrl = child
 	.execSync("git config --get remote.origin.url")
 	.toString("utf-8")
@@ -209,4 +207,4 @@ commitReleases.forEach((commits, idx) => {
 	changeLog += "\n"
 })
 
-fs.writeFileSync(`${process.env.PWD ?? "."}/${process.argv[3]}`, changeLog)
+fs.writeFileSync(`${process.env.PWD}/${process.argv[3]}`, changeLog)

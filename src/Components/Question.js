@@ -1,64 +1,69 @@
 import React from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { auth } from "../Config/firebase"
-import Signup from "../Components/Signup"
-import { signInWithEmailAndPassword } from "firebase/auth"
-function Signin() {
-	const [values, setValues] = React.useState({
-		email: "",
-		pass: "",
-	})
+import { useNavigate } from "react-router-dom"
+// import { getFirestore } from "firebase/firestore"
+import { app, db } from "../Config/firebase"
+import { collection, addDoc } from "firebase/firestore"
+
+function Question() {
+	// const db = getFirestore(app)
+
 	const navigate = useNavigate()
+	const [qstn, setQstn] = React.useState({
+		heading: "",
+		question: "",
+	})
 	const [msg, setMsg] = React.useState("")
 	function solve(event) {
 		const { name, value } = event.target
-		setValues(prev => {
+		setQstn(prev => {
 			return {
 				...prev,
 				[name]: value,
 			}
 		})
 	}
-	const handleSubmission = event => {
+	function handleSubmission(event) {
 		event.preventDefault()
-		if (!values.email || !values.pass) {
-			setMsg("Fill All Fields")
+		if (qstn == "") {
+			setMsg("Enter all fields")
 			return
 		}
 		setMsg("")
-		signInWithEmailAndPassword(auth, values.email, values.pass)
-			.then(res => {
-				navigate("/")
-			})
-			.catch(err => {
-				setMsg(err.message)
-				console.log(err.message)
-			})
+		// try {
+		const docRef = addDoc(collection(db, "questions"), {
+			question: qstn.question,
+			heading: qstn.heading,
+		})
+		console.log("Document written with ID: ", docRef.id)
+		//   } catch (e) {
+		//     console.error("Error adding document: ", e);
+		//   }
+		navigate("/")
 	}
 	return (
 		<div className="bg-gray-800 h-screen flex justify-center items-center">
 			<form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg">
 				<h2 className="text-4xl text-white font-bold text-center">
-					LOGIN
+					Add Question
 				</h2>
 				<div className="flex flex-col text-gray-400 py-2">
-					<label>Email</label>
+					<label>Heading</label>
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-						type="email"
-						placeholder="Email"
-						name="email"
+						type="text"
+						placeholder="Type Heading"
+						name="heading"
 						onChange={solve}
 						required
 					/>
 				</div>
 				<div className="flex flex-col text-gray-400 py-2">
-					<label>Password</label>
+					<label>Question</label>
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-						type="password"
-						placeholder="Password"
-						name="pass"
+						type="text"
+						placeholder="Type Question"
+						name="question"
 						onChange={solve}
 						required
 					/>
@@ -68,34 +73,11 @@ function Signin() {
 					onClick={handleSubmission}
 					className="w-full my-5 p-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg"
 				>
-					Log In
+					Add Question
 				</button>
-				<div>
-					<p className="mr-2 text-white">
-						Do not have an account?{" "}
-						<span>
-							<Link
-								className="underline underline-offset-1"
-								to="/Signup"
-								element={<Signup />}
-							>
-								Signup
-							</Link>
-						</span>
-					</p>
-				</div>
 			</form>
 		</div>
 	)
 }
 
-export default Signin
-// import React from 'react'
-
-// function Signin() {
-//   return (
-// 	<div>Signin</div>
-//   )
-// }
-
-// export default Signin
+export default Question
