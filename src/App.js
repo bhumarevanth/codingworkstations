@@ -4,8 +4,9 @@ import Signin from "./Components/Signin"
 import Signup from "./Components/Signup"
 import Home from "./Components/Home"
 import { auth } from "./Config/firebase"
-import Question from "./Components/Question"
+import Profile from "./Profile/Profile"
 import Problems from "./Components/Problems"
+import Question from "./Profile/AddQuestion"
 // import fire from './Config/firebase'
 function App() {
 	const [userName, setUserName] = React.useState("")
@@ -35,12 +36,16 @@ function App() {
 						element={<Signup />}
 					/>
 					<Route
-						path="/Add"
-						element={<Question />}
+						path="/Profile"
+						element={<Profile />}
 					/>
 					<Route
 						path="/Problems/:Id"
 						element={<Problems />}
+					/>
+					<Route
+						path="/Addqstn"
+						element={<Question />}
 					/>
 				</Routes>
 			</BrowserRouter>

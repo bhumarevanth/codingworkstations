@@ -1,13 +1,22 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-// import { getFirestore } from "firebase/firestore"
+import { auth } from "../Config/firebase"
 import { app, db } from "../Config/firebase"
 import { collection, addDoc } from "firebase/firestore"
 
 function Question() {
 	// const db = getFirestore(app)
-
 	const navigate = useNavigate()
+	const [uid, setUid] = React.useState("")
+	React.useEffect(() => {
+		auth.onAuthStateChanged(user => {
+			if (user) {
+				setUid(user.uid)
+			} else {
+				navigate("/Signin")
+			}
+		})
+	}, [])
 	const [qstn, setQstn] = React.useState({
 		heading: "",
 		question: "",
@@ -33,12 +42,10 @@ function Question() {
 		const docRef = addDoc(collection(db, "questions"), {
 			question: qstn.question,
 			heading: qstn.heading,
+			userid: uid,
 		})
 		console.log("Document written with ID: ", docRef.id)
-		//   } catch (e) {
-		//     console.error("Error adding document: ", e);
-		//   }
-		navigate("/")
+		navigate("/Profile")
 	}
 	return (
 		<div className="bg-gray-800 h-screen flex justify-center items-center">

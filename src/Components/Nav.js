@@ -95,10 +95,10 @@ export default function Navbar() {
 									<li className="nav-item">
 										<a
 											className="px-3 py-3 flex items-center text-base uppercase font-bold leading-snug text-white hover:opacity-75"
-											href="/Add"
+											href="/Profile"
 										>
 											<span className="ml-2">
-												Add Question
+												Profile
 											</span>
 										</a>
 									</li>
