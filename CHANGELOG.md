@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.2.1...v0.3.0) (2023-02-08)
+
+
+### ✨ Features
+
+* **profile page:** Added profile ([e6ff4ff](https://github.com/bhumarevanth/codingworkstations/commit/e6ff4ffac32cd8375f4c1c9ea74833e0a0305c2e))
+
 ### [0.2.1](https://github.com/bhumarevanth/codingworkstations/compare/v0.2.0...v0.2.1) (2023-02-06)
 
 ## 0.2.0 (2023-02-06)
