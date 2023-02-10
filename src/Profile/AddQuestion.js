@@ -45,7 +45,7 @@ function Question() {
 			userid: uid,
 		})
 		console.log("Document written with ID: ", docRef.id)
-		navigate("/Profile")
+		navigate("/Questions")
 	}
 	return (
 		<div className="bg-gray-800 h-screen flex justify-center items-center">

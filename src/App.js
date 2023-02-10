@@ -7,6 +7,7 @@ import { auth } from "./Config/firebase"
 import Profile from "./Profile/Profile"
 import Problems from "./Components/Problems"
 import Question from "./Profile/AddQuestion"
+import Qstns from "./Profile/Qstns"
 // import fire from './Config/firebase'
 function App() {
 	const [userName, setUserName] = React.useState("")
@@ -46,6 +47,10 @@ function App() {
 					<Route
 						path="/Addqstn"
 						element={<Question />}
+					/>
+					<Route
+						path="/Questions"
+						element={<Qstns />}
 					/>
 				</Routes>
 			</BrowserRouter>

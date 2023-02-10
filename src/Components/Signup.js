@@ -1,8 +1,10 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { auth } from "../Config/firebase"
+import { auth, storage } from "../Config/firebase"
 import Signin from "../Components/Signin"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+
 function Signup() {
 	const navigate = useNavigate()
 	const [values, setValues] = React.useState({
@@ -10,7 +12,9 @@ function Signup() {
 		email: "",
 		pass: "",
 		cpass: "",
+		url: "",
 	})
+	const [image, setImage] = React.useState(null)
 	const [msg, setMsg] = React.useState("")
 	function solve(event) {
 		const { name, value } = event.target
@@ -21,7 +25,35 @@ function Signup() {
 			}
 		})
 	}
+	function handleImage(event) {
+		if (event.target.files[0]) {
+			setImage(event.target.files[0])
+		}
+		if (event.target.files[0]) {
+			const imageRef = ref(storage, "image")
+			uploadBytes(imageRef, image)
+				.then(() => {
+					getDownloadURL(imageRef)
+						.then(url => {
+							setValues(prev => {
+								return {
+									...prev,
+									url: url,
+								}
+							})
+						})
+						.catch(error => {
+							console.log(error.message)
+						})
+					setImage(null)
+				})
+				.catch(error => {
+					console.log(error.message)
+				})
+		}
+	}
 	function handleSubmission(event) {
+		event.preventDefault()
 		if (!values.name || !values.email || !values.pass || !values.cpass) {
 			setMsg("Fill all Fields")
 			return
@@ -30,19 +62,20 @@ function Signup() {
 			setMsg("Passwords does not match")
 			return
 		}
+
 		setMsg("")
 		createUserWithEmailAndPassword(auth, values.email, values.pass)
 			.then(async res => {
 				const user = res.user
 				await updateProfile(user, {
 					displayName: values.name,
+					photoURL: values.url,
 				})
-				console.log(user)
+				navigate("/Signin")
 			})
 			.catch(err => {
 				setMsg(err.message)
 			})
-		navigate("/Signin")
 	}
 	return (
 		<div className="bg-gray-800 h-screen flex justify-center items-center">
@@ -92,6 +125,15 @@ function Signup() {
 						name="cpass"
 						onChange={solve}
 						required
+					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Upload Image</label>
+					<input
+						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+						type="file"
+						name="image"
+						onChange={handleImage}
 					/>
 				</div>
 				<b className="text-red-500 w-full text-center">{msg}</b>
