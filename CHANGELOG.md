@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.3.0...v0.4.0) (2023-02-10)
+
+
+### ✨ Features
+
+* **profile:** Added profile page and delete feature for questions page ([097953c](https://github.com/bhumarevanth/codingworkstations/commit/097953c331fd48eb83cd4ac3d2cb8c8553d385a7))
+
 ## [0.3.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.2.1...v0.3.0) (2023-02-08)
 
 
