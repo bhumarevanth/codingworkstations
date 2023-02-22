@@ -24,6 +24,7 @@ function Qstns() {
 	const [uid, setUid] = React.useState("")
 	const [data, setData] = React.useState([])
 	const [open, setOpen] = React.useState(false)
+	const [qid, setQid] = React.useState("")
 	const handleOpen = () => setOpen(true)
 	const handleClose = () => setOpen(false)
 
@@ -52,6 +53,12 @@ function Qstns() {
 				.catch(err => console.log(err.message))
 		}
 	}, [uid])
+	function editQstn(event) {
+		const { name } = event.target
+		setQid(name)
+		console.log(qid)
+		handleOpen()
+	}
 	function deleteQstn(event) {
 		const { name } = event.target
 		const qstnId = name
@@ -83,7 +90,7 @@ function Qstns() {
 						<button
 							className="px-10 py-2 bg-purple-500 rounded-lg mr-4"
 							name={item.id}
-							onClick={handleOpen}
+							onClick={editQstn}
 						>
 							Edit
 						</button>
@@ -110,7 +117,10 @@ function Qstns() {
 					aria-describedby="modal-modal-description"
 				>
 					<Box sx={style}>
-						<AddForm />
+						<AddForm
+							qid={qid}
+							onClose={handleClose}
+						/>
 					</Box>
 				</Modal>
 			</div>

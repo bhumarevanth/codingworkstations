@@ -27,12 +27,14 @@ function Problems() {
 		<div className="grid grid-cols-2 divide-x-0">
 			<div>
 				{data.id !== "" && (
-					<h1 className="font-bold text-4xl mt-8 pt-8 pb-8 pl-4 pr-4 resize-x rounded-md">
+					<h1 className="font-bold text-4xl mt-8 pt-8 pb-10 pl-4 pr-4 resize-x rounded-md">
 						{data.data.heading}
 					</h1>
 				)}
 				{data.id !== "" && (
-					<h2 className="pl-4 pr-4 text-2xl">{data.data.question}</h2>
+					<h2 className="pl-4 pr-4 text-2xl leading-relaxed">
+						{data.data.question}
+					</h2>
 				)}
 			</div>
 			<div>
