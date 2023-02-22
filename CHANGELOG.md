@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.4.0...v0.5.0) (2023-02-22)
+
+
+### ✨ Features
+
+* edit and delete questions ([27a8ca5](https://github.com/bhumarevanth/codingworkstations/commit/27a8ca5881105cbb6583495deda5df3461f4b098))
+
 ## [0.4.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.3.0...v0.4.0) (2023-02-10)
 
 
