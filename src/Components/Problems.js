@@ -2,7 +2,7 @@ import React from "react"
 import { useParams } from "react-router-dom"
 import { getDoc, doc } from "firebase/firestore"
 import { db } from "../Config/firebase"
-import Editor from "./Editor"
+import Editor from "../Editor/Editor"
 
 function Problems() {
 	const params = useParams()
@@ -38,7 +38,7 @@ function Problems() {
 				)}
 			</div>
 			<div>
-				<h1>Hi</h1>
+				<Editor />
 			</div>
 		</div>
 	)
