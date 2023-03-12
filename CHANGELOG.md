@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.5.2...v0.6.0) (2023-03-12)
+
+
+### ✨ Features
+
+* editor and history ([61aa02d](https://github.com/bhumarevanth/codingworkstations/commit/61aa02de432acff54014294993a8f79a8f2de36a))
+
 ### [0.5.2](https://github.com/bhumarevanth/codingworkstations/compare/v0.5.1...v0.5.2) (2023-03-10)
 
 
