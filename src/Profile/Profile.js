@@ -2,6 +2,7 @@ import React from "react"
 import Qstns from "./Qstns"
 import { auth } from "../Config/firebase"
 import Navbar from "./Navbar"
+import History from "./History"
 
 function Profile() {
 	const [profile, setProfile] = React.useState({
@@ -30,6 +31,11 @@ function Profile() {
 				<p className="mt-4 text-2xl">Email: {profile.email}</p>
 				<img src={profile.imgurl} />
 			</div>
+			<hr />
+			<h2 className="font-bold text-2xl m-4 resize-x rounded-md">
+				History :
+			</h2>
+			<History />
 		</>
 	)
 }

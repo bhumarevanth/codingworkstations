@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { getDoc, doc } from "firebase/firestore"
 import { db } from "../Config/firebase"
 import Editor from "../Editor/Editor"
+import Navbar from "./Nav"
 
 function Problems() {
 	const params = useParams()
@@ -24,23 +25,46 @@ function Problems() {
 			.catch(err => console.log(err.message))
 	}, [])
 	return (
-		<div className="grid grid-cols-2 divide-x-0">
-			<div>
-				{data.id !== "" && (
-					<h1 className="font-bold text-4xl mt-8 pt-8 pb-10 pl-4 pr-4 resize-x rounded-md">
-						{data.data.heading}
-					</h1>
-				)}
-				{data.id !== "" && (
-					<h2 className="pl-4 pr-4 text-2xl leading-relaxed">
-						{data.data.question}
-					</h2>
-				)}
+		<>
+			<Navbar />
+			<div className="grid grid-cols-2 divide-x-0 bg-slate-50">
+				<div>
+					{data.id !== "" && (
+						<h1 className="font-bold text-4xl mt-8 pt-8 pb-10 pl-4 pr-4 resize-x rounded-md">
+							{data.data.heading}
+						</h1>
+					)}
+					{data.id !== "" && (
+						<h2 className="pl-4 pr-4 text-2xl leading-relaxed whitespace-pre-line">
+							{data.data.question}
+						</h2>
+					)}
+					{data.id !== "" && (
+						<>
+							<h2 className="font-bold text-2xl m-4 resize-x rounded-md">
+								Input :
+							</h2>
+							<h2 className="pl-8 pr-4 text-2xl leading-relaxed whitespace-pre-line">
+								{data.data.input}
+							</h2>
+						</>
+					)}
+					{data.id !== "" && (
+						<div className="">
+							<h2 className="font-bold text-2xl m-4 resize-x rounded-md">
+								Output :
+							</h2>
+							<h2 className="pl-8 pr-4 text-2xl leading-relaxed whitespace-pre-line">
+								{data.data.output}
+							</h2>
+						</div>
+					)}
+				</div>
+				<div>
+					<Editor data={data} />
+				</div>
 			</div>
-			<div>
-				<Editor />
-			</div>
-		</div>
+		</>
 	)
 }
 

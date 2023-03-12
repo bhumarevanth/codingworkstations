@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react"
 import ReactDOM from "react-dom"
-import LanguageDropdown from "./LanguageDropdown"
+// import LanguageDropdown from "./LanguageDropdown"
 import Editor from "@monaco-editor/react"
 import Languages from "./Languages"
-import Spin from "../Icons/Spin"
-import Refresh from "../Icons/Refresh"
-import Check_circle from "../Icons/Check_circle"
+import CheckCircle from "../Icons/CheckCircle"
 import { auth } from "../Config/firebase"
 import { app, db } from "../Config/firebase"
 import { collection, addDoc } from "firebase/firestore"
+import Wrong from "../Icons/Wrong"
+import Error from "../Icons/Error"
+import Spinner from "../Icons/Spinner"
 
 function Edito(props) {
 	const [language, setLanguage] = useState("63")
@@ -23,10 +24,8 @@ function Edito(props) {
 	}
 	const [input, setInput] = useState(x)
 	const [loading, setLoading] = useState(false)
-	let status = ""
+	const [status, setStatus] = useState("")
 	const [uid, setUid] = React.useState("")
-	let date = new Date().toJSON()
-	console.log(date)
 	React.useEffect(() => {
 		auth.onAuthStateChanged(user => {
 			if (user) {
@@ -52,6 +51,7 @@ function Edito(props) {
 	}
 	const handleExecuteClick = async e => {
 		setLoading(true)
+		console.log(input)
 		const encodedSourceCode = btoa(code)
 		const encodedInput = btoa(input)
 		const options = {
@@ -88,25 +88,29 @@ function Edito(props) {
 				)
 					.then(response => response.json())
 					.then(response => {
-						console.log(response)
 						setLoading(false)
 						if ("data" in props) {
-							if (response.stdout == props.data.data.output) {
-								setOutput(atob(response.stdout))
-								status = "Accepted"
-								console.log(atob(response.stdout))
-							} else if (
-								response.stdout != props.data.data.output
+							console.log(response)
+							if (
+								response.stdout &&
+								atob(response.stdout) == props.data.data.output
 							) {
 								setOutput(atob(response.stdout))
-								status = "Wrong Answer"
+								setStatus("Accepted")
+								console.log(atob(response.stdout))
+							} else if (
+								response.stdout &&
+								atob(response.stdout) != props.data.data.output
+							) {
+								console.log("false")
+								setOutput(atob(response.stdout))
+								setStatus("Wrong Answer")
 							} else if (response.stderr) {
 								setOutput(atob(response.stderr))
-								status = "Error"
-								console.log(atob(response.stderr))
+								setStatus("Error")
 							} else {
 								setOutput(atob(response.compile_output))
-								status = "Compilation Error"
+								setStatus("Compilation Error")
 								console.log(atob(response.compile_output))
 							}
 						} else {
@@ -163,15 +167,20 @@ function Edito(props) {
 					</select>
 				</div>
 				{!loading ? (
-					<button
-						onClick={handleExecuteClick}
-						className="bg-blue-500 text-white px-2 py-1 rounded-md"
-					>
-						Execute
-					</button>
+					<div className="flex justify-between items-center">
+						{status == "Accepted" && <CheckCircle />}
+						{status == "Wrong Answer" && <Wrong />}
+						{status == "Compilation Error" && <Error />}
+						<button
+							onClick={handleExecuteClick}
+							className="bg-blue-500 text-white px-2 py-1 mx-4 rounded-md"
+						>
+							Execute
+						</button>
+					</div>
 				) : (
 					<div>
-						<Spin />
+						<Spinner className="animate" />
 					</div>
 				)}
 			</div>
@@ -189,9 +198,9 @@ function Edito(props) {
 					<div className="m-4">
 						<textarea
 							className="w-full border border-gray-400 rounded-md p-2 h-64 resize-none"
-							value={input}
+							value={"data" in props ? props.data.data.input : ""}
 							onChange={handleInputChange}
-							placeholder="Enter input here..."
+							placeholder={input}
 						></textarea>
 					</div>
 				</div>

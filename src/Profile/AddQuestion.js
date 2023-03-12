@@ -20,6 +20,8 @@ function Question() {
 	const [qstn, setQstn] = React.useState({
 		heading: "",
 		question: "",
+		input: "",
+		output: "",
 	})
 	const [msg, setMsg] = React.useState("")
 	function solve(event) {
@@ -42,6 +44,8 @@ function Question() {
 		const docRef = addDoc(collection(db, "questions"), {
 			question: qstn.question,
 			heading: qstn.heading,
+			input: qstn.input,
+			output: qstn.output,
 			userid: uid,
 		})
 		console.log("Document written with ID: ", docRef.id)
@@ -66,11 +70,33 @@ function Question() {
 				</div>
 				<div className="flex flex-col text-gray-400 py-2">
 					<label>Question</label>
-					<input
+					<textarea
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
 						type="text"
 						placeholder="Type Question"
 						name="question"
+						onChange={solve}
+						required
+					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Input</label>
+					<textarea
+						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+						type="text"
+						placeholder="Enter Input"
+						name="input"
+						onChange={solve}
+						required
+					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Output</label>
+					<textarea
+						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+						type="text"
+						placeholder="Enter Output"
+						name="output"
 						onChange={solve}
 						required
 					/>
