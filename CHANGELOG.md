@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.6.0...v0.7.0) (2023-03-14)
+
+
+### ✨ Features
+
+* prefinal ([c8d4232](https://github.com/bhumarevanth/codingworkstations/commit/c8d423263932713f1be123b6a21b39567df12a8e))
+
 ## [0.6.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.5.2...v0.6.0) (2023-03-12)
 
 
