@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.7.0...v0.8.0) (2023-03-14)
+
+
+### ✨ Features
+
+* completed ([abcdd72](https://github.com/bhumarevanth/codingworkstations/commit/abcdd72b571bc43f576859fa13bdbb6d160d7792))
+
 ## [0.7.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.6.0...v0.7.0) (2023-03-14)
 
 
