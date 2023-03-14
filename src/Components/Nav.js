@@ -7,6 +7,8 @@ import Snout from "../Icons/Snout"
 import Pfle from "../Icons/Pfle"
 import Pground from "../Icons/Pground"
 import Home from "../Icons/Home"
+import Signup from "../Icons/Signup"
+import Signin from "../Icons/Signin"
 
 export default function Navbar() {
 	const [navbarOpen, setNavbarOpen] = React.useState(false)
@@ -73,6 +75,7 @@ export default function Navbar() {
 											className="px-3 py-3 flex items-center text-base uppercase font-bold leading-snug text-white hover:opacity-75"
 											href="/Signin"
 										>
+											<Signin />
 											<span className="ml-2">Signin</span>
 										</a>
 									</li>
@@ -81,6 +84,7 @@ export default function Navbar() {
 											className="px-3 py-3 flex items-center text-base uppercase font-bold leading-snug text-white hover:opacity-75"
 											href="/Signup"
 										>
+											<Signup />
 											<span className="ml-2">Signup</span>
 										</a>
 									</li>

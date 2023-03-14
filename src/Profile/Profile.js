@@ -51,28 +51,48 @@ function Profile() {
 		console.log(profile.imgurl)
 	}, [])
 	return (
-		<>
+		<div className="bg-slate-150">
 			<Navbar />
 			<div className="flex flex-col justify-center items-center">
-				<h1 className="mt-10 text-4xl">Profile</h1>
-				<p className="mt-4 text-2xl">Name: {profile.name}</p>
-				<p className="mt-4 text-2xl">Email: {profile.email}</p>
-				{data.length != 0 && (
-					<p className="mt-4 text-2xl">Score: {data[0].data.score}</p>
-				)}
-				{data.length != 0 && (
-					<p className="mt-4 text-2xl">
-						Score: {data[0].data.solved}
-					</p>
-				)}
-				<img src={profile.imgurl} />
+				<h1 className="mt-10 text-4xl font-bold">Profile</h1>
 			</div>
-			<hr />
-			<h2 className="font-bold text-2xl m-4 resize-x rounded-md">
-				History :
+			<div className="flex justify-evenly items-center m-8">
+				<div className="flex flex-col">
+					<div className="flex justify-center m-2">
+						<p className="text-2xl m-1 font-bold">Name:</p>
+						<p className="text-2xl m-1 font-mono">{profile.name}</p>
+					</div>
+					<div className="flex justify-center m-2">
+						<p className="text-2xl m-1 font-bold">Email:</p>
+						<p className="text-2xl m-1 font-mono">
+							{profile.email}
+						</p>
+					</div>
+				</div>
+				<div className="flex flex-col">
+					<div className="flex justify-center m-2">
+						<p className="text-2xl m-1 font-bold">Solved:</p>
+						{data.length != 0 && (
+							<p className="text-2xl m-1 font-mono">
+								{data[0].data.solved}
+							</p>
+						)}
+					</div>
+					<div className="flex justify-center m-2">
+						<p className="text-2xl m-1 font-bold">Score:</p>
+						{data.length != 0 && (
+							<p className="text-2xl m-1 font-mono">
+								{data[0].data.score}
+							</p>
+						)}
+					</div>
+				</div>
+			</div>
+			<h2 className="font-bold text-2xl my-4 px-4 py-2 rounded-md bg-gray-200 text-gray-800">
+				History:
 			</h2>
 			<History />
-		</>
+		</div>
 	)
 }
 

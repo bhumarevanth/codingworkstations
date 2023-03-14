@@ -50,7 +50,7 @@ export default function Navbar() {
 							<li className="nav-item">
 								<a
 									className="px-3 py-3 flex items-center text-base uppercase font-bold leading-snug text-white hover:opacity-75"
-									href="/"
+									href="/Pground"
 								>
 									<Pground />
 									<span className="ml-2">Play Ground</span>

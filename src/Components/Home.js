@@ -37,7 +37,7 @@ function Home(props) {
 		}
 	}
 	return (
-		<div>
+		<div className="bg-purple-50">
 			<Navbar />
 			<h1 className="flex flex-col justify-center items-center font-bold text-4xl mt-4">
 				Welcome {props.name}
@@ -46,7 +46,7 @@ function Home(props) {
 				{Object.values(data).map(item => (
 					<li
 						key={item.id}
-						className="flex justify-between items-center px-4 py-6 bg-gray-200 m-8 rounded-lg"
+						className="flex justify-between items-center px-4 py-6 bg-slate-200 m-8 rounded-lg"
 					>
 						<h1 className="px-5 text-2xl">{item.data.heading}</h1>
 						<button

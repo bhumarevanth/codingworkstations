@@ -4,16 +4,18 @@ import Languages from "./Languages"
 import CheckCircle from "../Icons/CheckCircle"
 import { auth } from "../Config/firebase"
 import { db } from "../Config/firebase"
-import { collection, addDoc, getDocs, updateDoc } from "firebase/firestore"
+import { collection, addDoc, getDocs, updateDoc, doc } from "firebase/firestore"
 import Wrong from "../Icons/Wrong"
 import Error from "../Icons/Error"
 import Spinner from "../Icons/Spinner"
 import { query, where } from "firebase/firestore"
+import { useNavigate } from "react-router-dom"
 
 function Edito(props) {
 	const [language, setLanguage] = useState("63")
 	const [Output, setOutput] = useState("")
 	const [code, setCode] = useState("")
+	const navigate = useNavigate()
 	// console.log(props)
 	let x
 	if ("data" in props) {
@@ -57,6 +59,7 @@ function Edito(props) {
 					getDocs(p)
 						.then(response => {
 							const prfl = response.docs.map(doc => ({
+								profRef: p,
 								data: doc.data(),
 								id: doc.id,
 							}))
@@ -88,7 +91,7 @@ function Edito(props) {
 		setLoading(true)
 		console.log(input)
 		let xinput
-		if (!input) {
+		if (!input && "data" in props) {
 			xinput = props.data.data.input
 		} else {
 			xinput = input
@@ -131,36 +134,16 @@ function Edito(props) {
 					.then(response => {
 						setLoading(false)
 						console.log(response)
+						let st = ""
 						if ("data" in props) {
 							if (
 								response.stdout != null &&
 								atob(response.stdout) == props.data.data.output
 							) {
 								console.log(atob(response.stdout))
-								if (submissions.length == 0) {
-									console.log("Hi")
-									console.log(prof[0].id)
-									console.log(prof[0].data.score)
-									const puid = prof[0].id
-									console.log(typeof puid)
-									const uprofile = {
-										score:
-											parseInt(prof[0].data.score) + 10,
-										solved:
-											parseInt(prof[0].data.solved) + 1,
-										uid: prof[0].data.uid,
-									}
-									console.log(uprofile)
-									// const profileRef = doc(db, 'profile', "pGLAwRpOjSvvELd8fbBR")
-									// console.log("Hi")
-									// updateDoc(profileRef,uprofile).then(ref => console.log("updated"))
-									// console.log("Accepted")
-									db.collection("profile")
-										.doc(prof[0].id)
-										.update(uprofile)
-								}
 								setOutput(atob(response.stdout))
 								setStatus("Accepted")
+								st = "Accepted"
 							} else if (
 								response.stdout &&
 								atob(response.stdout) != props.data.data.output
@@ -168,12 +151,15 @@ function Edito(props) {
 								console.log("false")
 								setOutput(atob(response.stdout))
 								setStatus("Wrong Answer")
+								st = "Wrong Answer"
 							} else if (response.stderr) {
 								setOutput(atob(response.stderr))
 								setStatus("Error")
+								st = "Error"
 							} else {
 								setOutput(atob(response.compile_output))
 								setStatus("Compilation Error")
+								st = "Compilation Error"
 								console.log(atob(response.compile_output))
 							}
 						} else {
@@ -196,12 +182,43 @@ function Edito(props) {
 								{
 									questionId: props.data.id,
 									heading: props.data.data.heading,
-									status: status,
+									status: st,
 									date: date,
 									userid: uid,
 								}
 							)
 							console.log("Document written with ID: ", docRef.id)
+						}
+						if (
+							submissions.length == 0 &&
+							st == "Accepted" &&
+							"data" in props
+						) {
+							console.log("Hi")
+							console.log(prof[0].id)
+							console.log(prof[0].data.score)
+							let sc = 0
+							if (props.data.data.medium == "Medium") {
+								sc = 20
+							} else if (props.data.data.medium == "Difficult") {
+								sc = 30
+							}
+							const uprofile = {
+								score: parseInt(prof[0].data.score) + sc,
+								solved: parseInt(prof[0].data.solved) + 1,
+								uid: prof[0].data.uid,
+							}
+							console.log(uprofile)
+							const profileRef = doc(db, "profile", prof[0].id)
+							console.log("Hi")
+							console.log(profileRef)
+							updateDoc(profileRef, uprofile)
+								.then(ref => console.log("Added"))
+								.catch(err => console.log(err))
+							// console.log("Accepted")
+							// db.collection("profile")
+							// 	.doc(prof[0].id)
+							// 	.update(uprofile)
 						}
 					})
 					.catch(err => setOutput(err))
