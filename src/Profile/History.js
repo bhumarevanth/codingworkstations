@@ -89,6 +89,7 @@ function History() {
 									)}
 									{item.data.status ==
 										"Compilation Error" && <Error />}
+									{item.data.status == "Error" && <Error />}
 									<div className="px-2">
 										{item.data.status}
 									</div>

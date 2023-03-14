@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react"
-import ReactDOM from "react-dom"
-// import LanguageDropdown from "./LanguageDropdown"
+import React, { useState } from "react"
 import Editor from "@monaco-editor/react"
 import Languages from "./Languages"
 import CheckCircle from "../Icons/CheckCircle"
 import { auth } from "../Config/firebase"
-import { app, db } from "../Config/firebase"
-import { collection, addDoc } from "firebase/firestore"
+import { db } from "../Config/firebase"
+import { collection, addDoc, getDocs, updateDoc } from "firebase/firestore"
 import Wrong from "../Icons/Wrong"
 import Error from "../Icons/Error"
 import Spinner from "../Icons/Spinner"
+import { query, where } from "firebase/firestore"
 
 function Edito(props) {
 	const [language, setLanguage] = useState("63")
 	const [Output, setOutput] = useState("")
 	const [code, setCode] = useState("")
-	console.log(props)
+	// console.log(props)
 	let x
 	if ("data" in props) {
 		x = props.data.data.input
@@ -26,10 +25,46 @@ function Edito(props) {
 	const [loading, setLoading] = useState(false)
 	const [status, setStatus] = useState("")
 	const [uid, setUid] = React.useState("")
+	const [prof, setProf] = React.useState([])
+	const [submissions, setSubmissions] = React.useState([])
 	React.useEffect(() => {
 		auth.onAuthStateChanged(user => {
 			if (user) {
 				setUid(user.uid)
+				// console.log(user.uid)
+				// console.log(props.data.id)
+				if ("data" in props) {
+					const q = query(
+						collection(db, "submissions"),
+						where("userid", "==", user.uid),
+						where("questionId", "==", props.data.id),
+						where("status", "==", "Accepted")
+					)
+					getDocs(q)
+						.then(response => {
+							const qsns = response.docs.map(doc => ({
+								data: doc.data(),
+								id: doc.id,
+							}))
+							setSubmissions(qsns)
+							console.log(qsns)
+						})
+						.catch(err => console.log(err.message))
+					const p = query(
+						collection(db, "profile"),
+						where("uid", "==", user.uid)
+					)
+					getDocs(p)
+						.then(response => {
+							const prfl = response.docs.map(doc => ({
+								data: doc.data(),
+								id: doc.id,
+							}))
+							setProf(prfl)
+							console.log(prfl)
+						})
+						.catch(err => console.log(err.message))
+				}
 			} else {
 				navigate("/Signin")
 			}
@@ -52,15 +87,21 @@ function Edito(props) {
 	const handleExecuteClick = async e => {
 		setLoading(true)
 		console.log(input)
+		let xinput
+		if (!input) {
+			xinput = props.data.data.input
+		} else {
+			xinput = input
+		}
 		const encodedSourceCode = btoa(code)
-		const encodedInput = btoa(input)
+		const encodedInput = btoa(xinput)
 		const options = {
 			method: "POST",
 			headers: {
 				"content-type": "application/json",
 				"Content-Type": "application/json",
 				"X-RapidAPI-Key":
-					"142e647f7bmsh69117b87f333cb8p1aa34bjsne06b9a101f38",
+					"7ce176b642msh789b80276da3652p10ff17jsn9e58052b2ede",
 				"X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
 			},
 			body: `{"language_id":${language},"source_code":"${encodedSourceCode}","stdin":"${encodedInput}"}`,
@@ -78,7 +119,7 @@ function Edito(props) {
 					method: "GET",
 					headers: {
 						"X-RapidAPI-Key":
-							"142e647f7bmsh69117b87f333cb8p1aa34bjsne06b9a101f38",
+							"7ce176b642msh789b80276da3652p10ff17jsn9e58052b2ede",
 						"X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
 					},
 				}
@@ -89,15 +130,37 @@ function Edito(props) {
 					.then(response => response.json())
 					.then(response => {
 						setLoading(false)
+						console.log(response)
 						if ("data" in props) {
-							console.log(response)
 							if (
-								response.stdout &&
+								response.stdout != null &&
 								atob(response.stdout) == props.data.data.output
 							) {
+								console.log(atob(response.stdout))
+								if (submissions.length == 0) {
+									console.log("Hi")
+									console.log(prof[0].id)
+									console.log(prof[0].data.score)
+									const puid = prof[0].id
+									console.log(typeof puid)
+									const uprofile = {
+										score:
+											parseInt(prof[0].data.score) + 10,
+										solved:
+											parseInt(prof[0].data.solved) + 1,
+										uid: prof[0].data.uid,
+									}
+									console.log(uprofile)
+									// const profileRef = doc(db, 'profile', "pGLAwRpOjSvvELd8fbBR")
+									// console.log("Hi")
+									// updateDoc(profileRef,uprofile).then(ref => console.log("updated"))
+									// console.log("Accepted")
+									db.collection("profile")
+										.doc(prof[0].id)
+										.update(uprofile)
+								}
 								setOutput(atob(response.stdout))
 								setStatus("Accepted")
-								console.log(atob(response.stdout))
 							} else if (
 								response.stdout &&
 								atob(response.stdout) != props.data.data.output
@@ -198,7 +261,9 @@ function Edito(props) {
 					<div className="m-4">
 						<textarea
 							className="w-full border border-gray-400 rounded-md p-2 h-64 resize-none"
-							value={"data" in props ? props.data.data.input : ""}
+							defaultValue={
+								"data" in props ? props.data.data.input : ""
+							}
 							onChange={handleInputChange}
 							placeholder={input}
 						></textarea>

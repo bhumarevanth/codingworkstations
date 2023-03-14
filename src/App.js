@@ -8,6 +8,8 @@ import Profile from "./Profile/Profile"
 import Problems from "./Components/Problems"
 import Question from "./Profile/AddQuestion"
 import Qstns from "./Profile/Qstns"
+import Edito from "./Editor/Editor"
+import Playgrnd from "./Components/Playgrnd"
 // import fire from './Config/firebase'
 function App() {
 	const [userName, setUserName] = React.useState("")
@@ -51,6 +53,10 @@ function App() {
 					<Route
 						path="/Questions"
 						element={<Qstns />}
+					/>
+					<Route
+						path="/Pground"
+						element={<Playgrnd />}
 					/>
 				</Routes>
 			</BrowserRouter>

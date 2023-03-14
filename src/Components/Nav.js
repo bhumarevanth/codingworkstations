@@ -6,6 +6,7 @@ import Bars from "../Icons/Bars"
 import Snout from "../Icons/Snout"
 import Pfle from "../Icons/Pfle"
 import Pground from "../Icons/Pground"
+import Home from "../Icons/Home"
 
 export default function Navbar() {
 	const [navbarOpen, setNavbarOpen] = React.useState(false)
@@ -30,14 +31,15 @@ export default function Navbar() {
 	}
 	return (
 		<>
-			<nav className="relative flex flex-wrap items-center justify-between px-2 py-4 bg-slate-500 mb-3">
+			<nav className="sticky top-0 z-20 w-full flex flex-wrap items-center justify-between px-2 py-4 bg-slate-500 mb-3">
 				<div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
 					<div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
 						<a
-							className="font-bold leading-relaxed inline-block mr-4 py-4 whitespace-nowrap uppercase text-white text-2xl"
+							className="flex items-center font-bold leading-relaxed mr-4 py-4 whitespace-nowrap uppercase text-white text-2xl"
 							href="/"
 						>
-							Coding Workstation
+							<Home />
+							<span className="px-2">Coding Workstation</span>
 						</a>
 						<button
 							className="text-white cursor-pointer text-xl leading-none px-3 py-3 border border-solid border-transparent rounded  block lg:hidden outline-none focus:outline-none"
@@ -58,7 +60,7 @@ export default function Navbar() {
 							<li className="nav-item">
 								<a
 									className="px-3 py-3 flex items-center text-base uppercase font-bold leading-snug text-white hover:opacity-75"
-									href="/"
+									href="/Pground"
 								>
 									<Pground />
 									<span className="ml-2">Play Ground</span>

@@ -39,7 +39,7 @@ function Home(props) {
 	return (
 		<div>
 			<Navbar />
-			<h1 className="flex flex-col justify-center items-center font-bold text-4xl">
+			<h1 className="flex flex-col justify-center items-center font-bold text-4xl mt-4">
 				Welcome {props.name}
 			</h1>
 			<ul>

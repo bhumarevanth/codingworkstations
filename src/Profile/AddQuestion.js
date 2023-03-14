@@ -6,6 +6,25 @@ import { collection, addDoc } from "firebase/firestore"
 
 function Question() {
 	// const db = getFirestore(app)
+	const [medium, setMedium] = React.useState("Easy")
+	const med = [
+		{
+			id: 1,
+			value: "Easy",
+		},
+		{
+			id: 2,
+			value: "Medium",
+		},
+		{
+			id: 3,
+			value: "Difficult",
+		},
+	]
+	function handleMediumChange(event) {
+		setMedium(event.target.value)
+		console.log(event.target.value)
+	}
 	const navigate = useNavigate()
 	const [uid, setUid] = React.useState("")
 	React.useEffect(() => {
@@ -47,6 +66,7 @@ function Question() {
 			input: qstn.input,
 			output: qstn.output,
 			userid: uid,
+			medium: medium,
 		})
 		console.log("Document written with ID: ", docRef.id)
 		navigate("/Questions")
@@ -100,6 +120,24 @@ function Question() {
 						onChange={solve}
 						required
 					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Difficulty Medium:</label>
+					<select
+						id="difficulty-select"
+						value={medium}
+						onChange={handleMediumChange}
+						className="border border-gray-400 rounded-md p-1"
+					>
+						{med.map(med => (
+							<option
+								key={med.id}
+								value={med.value}
+							>
+								{med.value}
+							</option>
+						))}
+					</select>
 				</div>
 				<b className="text-red-500 w-full text-center">{msg}</b>
 				<button

@@ -4,17 +4,17 @@ function Pground() {
 	return (
 		<>
 			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
+				height="25px"
+				width="25px"
+				fill="currentColor"
 				viewBox="0 0 24 24"
-				strokeWidth={1.5}
-				stroke="currentColor"
-				className="w-6 h-6"
+				xmlns="http://www.w3.org/2000/svg"
+				aria-hidden="true"
 			>
 				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
+					clipRule="evenodd"
+					fillRule="evenodd"
+					d="M3 6a3 3 0 013-3h12a3 3 0 013 3v12a3 3 0 01-3 3H6a3 3 0 01-3-3V6zm14.25 6a.75.75 0 01-.22.53l-2.25 2.25a.75.75 0 11-1.06-1.06L15.44 12l-1.72-1.72a.75.75 0 111.06-1.06l2.25 2.25c.141.14.22.331.22.53zm-10.28-.53a.75.75 0 000 1.06l2.25 2.25a.75.75 0 101.06-1.06L8.56 12l1.72-1.72a.75.75 0 10-1.06-1.06l-2.25 2.25z"
 				/>
 			</svg>
 		</>

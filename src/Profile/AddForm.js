@@ -3,6 +3,20 @@ import { getDoc, doc, updateDoc } from "firebase/firestore"
 import { db } from "../Config/firebase"
 import { useNavigate } from "react-router-dom"
 function AddForm(props) {
+	const med = [
+		{
+			id: 1,
+			value: "Easy",
+		},
+		{
+			id: 2,
+			value: "Medium",
+		},
+		{
+			id: 3,
+			value: "Difficult",
+		},
+	]
 	const navigate = useNavigate()
 	const Id = props.qid
 	const [data, setData] = React.useState({
@@ -13,6 +27,9 @@ function AddForm(props) {
 		heading: "",
 		question: "",
 		userid: "",
+		input: "",
+		output: "",
+		medium: "Easy",
 	})
 	React.useEffect(() => {
 		const qref = doc(db, "questions", Id)
@@ -39,6 +56,15 @@ function AddForm(props) {
 		if (qstn.userid == "") {
 			qstn.userid = data.data.userid
 		}
+		if (qstn.input == "") {
+			qstn.input = data.data.input
+		}
+		if (qstn.output == "") {
+			qstn.output = data.data.output
+		}
+		if (qstn.medium == "") {
+			qstn.medium = data.data.medium
+		}
 		setQstn(prev => {
 			return {
 				...prev,
@@ -49,7 +75,12 @@ function AddForm(props) {
 	}
 	function handleSubmission(event) {
 		event.preventDefault()
-		if (qstn.heading == "" || qstn.question == "") {
+		if (
+			qstn.heading == "" ||
+			qstn.question == "" ||
+			qstn.input == "" ||
+			qstn.output == ""
+		) {
 			setMsg("Enter all fields")
 			return
 		}
@@ -57,7 +88,7 @@ function AddForm(props) {
 		const docRef = doc(db, "questions", Id)
 		updateDoc(docRef, qstn).then(docRef => {
 			props.onClose()
-			navigate("/Questions")
+			location.reload()
 		})
 	}
 	return (
@@ -71,7 +102,6 @@ function AddForm(props) {
 					<input
 						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
 						type="text"
-						// placeholder="Type Heading"
 						name="heading"
 						onChange={solve}
 						required
@@ -88,6 +118,47 @@ function AddForm(props) {
 						onChange={solve}
 						required
 					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Input</label>
+					<textarea
+						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+						type="text"
+						defaultValue={data.data.input}
+						name="input"
+						onChange={solve}
+						required
+					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Output</label>
+					<textarea
+						className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+						type="text"
+						defaultValue={data.data.output}
+						name="output"
+						onChange={solve}
+						required
+					/>
+				</div>
+				<div className="flex flex-col text-gray-400 py-2">
+					<label>Difficulty Medium:</label>
+					<select
+						id="difficulty-select"
+						name="medium"
+						onChange={solve}
+						className="border border-gray-400 rounded-md p-1"
+						required
+					>
+						{med.map(med => (
+							<option
+								key={med.id}
+								value={med.value}
+							>
+								{med.value}
+							</option>
+						))}
+					</select>
 				</div>
 				<b className="text-red-500 w-full text-center">{msg}</b>
 				<button

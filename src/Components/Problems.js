@@ -60,9 +60,7 @@ function Problems() {
 						</div>
 					)}
 				</div>
-				<div>
-					<Editor data={data} />
-				</div>
+				<div>{data.id != "" && <Editor data={data} />}</div>
 			</div>
 		</>
 	)

@@ -4,6 +4,8 @@ import { auth, storage } from "../Config/firebase"
 import Signin from "../Components/Signin"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { app, db } from "../Config/firebase"
+import { collection, addDoc } from "firebase/firestore"
 
 function Signup() {
 	const navigate = useNavigate()
@@ -70,6 +72,13 @@ function Signup() {
 				await updateProfile(user, {
 					displayName: values.name,
 					photoURL: values.url,
+					score: 0,
+					solved: 0,
+				})
+				const docRef = addDoc(collection(db, "profile"), {
+					solved: 0,
+					score: 0,
+					uid: user.uid,
 				})
 				navigate("/Signin")
 			})
