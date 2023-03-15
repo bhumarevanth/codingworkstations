@@ -185,6 +185,7 @@ function Edito(props) {
 									status: st,
 									date: date,
 									userid: uid,
+									code: code,
 								}
 							)
 							console.log("Document written with ID: ", docRef.id)
@@ -197,7 +198,7 @@ function Edito(props) {
 							console.log("Hi")
 							console.log(prof[0].id)
 							console.log(prof[0].data.score)
-							let sc = 0
+							let sc = 10
 							if (props.data.data.medium == "Medium") {
 								sc = 20
 							} else if (props.data.data.medium == "Difficult") {
@@ -289,7 +290,7 @@ function Edito(props) {
 				<div className="w-1/2">
 					<div className="m-4 border-gray-700">Output:</div>
 					<div className="m-4 flex justify-center items-center">
-						<div className="w-full border border-gray-400 rounded-md p-2 h-64 resize-none">
+						<div className="w-full border border-gray-400 rounded-md p-2 h-64 resize-none overflow-auto whitespace-pre-line">
 							{Output}
 						</div>
 					</div>

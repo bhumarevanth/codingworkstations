@@ -44,11 +44,9 @@ function Profile() {
 				setProfile({
 					name: user.displayName,
 					email: user.email,
-					imgurl: user.photoURL,
 				})
 			}
 		})
-		console.log(profile.imgurl)
 	}, [])
 	return (
 		<div className="bg-slate-150">
