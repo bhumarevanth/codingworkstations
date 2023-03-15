@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.9.0...v0.10.0) (2023-03-15)
+
+
+### ✨ Features
+
+* leader Board ([9a31c92](https://github.com/bhumarevanth/codingworkstations/commit/9a31c925852cac54c8760506a2d6551125f76c3c))
+
 ## [0.9.0](https://github.com/bhumarevanth/codingworkstations/compare/v0.8.0...v0.9.0) (2023-03-15)
 
 
