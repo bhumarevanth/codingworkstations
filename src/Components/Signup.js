@@ -79,6 +79,7 @@ function Signup() {
 					solved: 0,
 					score: 0,
 					uid: user.uid,
+					name: values.name,
 				})
 				navigate("/Signin")
 			})

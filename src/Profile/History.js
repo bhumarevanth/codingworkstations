@@ -24,6 +24,7 @@ const style = {
 	width: 600,
 	maxHeight: "75%",
 	overflowY: "auto",
+	overflowX: "auto",
 	bgcolor: "background.paper",
 	border: "2px solid #000",
 	boxShadow: 24,
